@@ -56,7 +56,7 @@ public class Worker : BackgroundService
         await process.WaitForExitAsync();
 
         if (!string.IsNullOrWhiteSpace(error))
-            _logger.LogError("Failed to create backup for {name}", server.Name);
+            _logger.LogError("Failed to create backup for {name}, {error}", server.Name, error);
         else
             _logger.LogInformation("Backed up {name}", server.Name);
     }
