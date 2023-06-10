@@ -19,4 +19,6 @@ COPY --from=publish /app/publish .
 RUN apt update
 RUN apt install -y postgresql-client
 
+RUN mkdir /backups
+
 ENTRYPOINT ["dotnet", "AutoDbBackup.dll"]

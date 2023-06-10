@@ -18,12 +18,11 @@ public class Worker : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            /*
             foreach (var server in _configuration.Value.DbServers)
             {
                 await CreateDbBackup(server);
-            }*/
-            await Task.Delay(TimeSpan.FromHours(6), stoppingToken);
+            }
+            await Task.Delay(TimeSpan.FromHours(12), stoppingToken);
         }
     }
 
