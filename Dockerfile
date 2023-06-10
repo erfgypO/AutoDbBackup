@@ -16,10 +16,12 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt jammy-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-RUN wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo tee /etc/apt/trusted.gpg.d/pgdg.asc &>/dev/null
 RUN apt update
-RUN apt install -y postgresql-client
+RUN apt install -y curl ca-certificates gnupg
+RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
+RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ jammy-pgdg main" >> /etc/apt/sources.list.d/postgresql.list'
+RUN apt update
+RUN apt install -y postgresql-client-15
 
 RUN mkdir /backups
 
